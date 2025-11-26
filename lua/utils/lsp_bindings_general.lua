@@ -7,6 +7,7 @@ M.vim = {
   { "<leader>lg", "vim.lsp.buf.signature_help", "Signature" },
   { "]d", "vim.diagnostic.goto_next", "Next diagnostic" },
   { "[d", "vim.diagnostic.goto_prev", "Prev diagnostic" },
+  { "gd", "vim.lsp.buf.definition", "Go to definition" },
 }
 
 M.lsp_keys = {
@@ -42,7 +43,11 @@ M.lsp = {
   },
   definition = {
     function()
-      snacks.picker.lsp_definitions()
+      if snacks and snacks.picker and snacks.picker.lsp_definitions then
+        snacks.picker.lsp_definitions()
+      else
+        vim.lsp.buf.definition()
+      end
     end,
     "Definition",
   },
