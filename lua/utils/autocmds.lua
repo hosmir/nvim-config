@@ -234,6 +234,9 @@ vim.api.nvim_create_autocmd("User", {
     Snacks.toggle.inlay_hints():map "\\y"
     Snacks.toggle.indent():map "\\I"
     Snacks.toggle.dim():map "\\D"
+    
+    -- Load theme helpers (creates :CursorTheme* commands)
+    require "utils.theme_helpers"
   end,
 })
 
