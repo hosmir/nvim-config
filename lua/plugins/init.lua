@@ -4,12 +4,37 @@ return {
     -- event = 'BufWritePre', -- uncomment for format on save
     opts = require "configs.conform",
   },
-
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
     config = function()
       require "configs.lspconfig"
+    end,
+  },
+  {
+    "williamboman/mason.nvim",
+    dependencies = {
+      "williamboman/mason-lspconfig.nvim",
+    },
+    config = function()
+      local mason = require "mason"
+      local mason_lspconfig = require "mason-lspconfig"
+      local mason_config = require "configs.mason"
+
+      mason.setup {
+        ui = {
+          icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗",
+          },
+        },
+      }
+
+      mason_lspconfig.setup {
+        ensure_installed = mason_config.ensure_installed,
+        automatic_installation = true,
+      }
     end,
   },
   {
@@ -56,7 +81,7 @@ return {
   {
     "kristijanhusak/vim-dadbod-ui",
     dependencies = {
-      { "tpope/vim-dadbod",                     lazy = true },
+      { "tpope/vim-dadbod", lazy = true },
       { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
     },
     cmd = {
@@ -93,7 +118,7 @@ return {
   {
     "NeogitOrg/neogit",
     dependencies = {
-      "nvim-lua/plenary.nvim",  -- required
+      "nvim-lua/plenary.nvim", -- required
       "sindrets/diffview.nvim", -- optional - Diff integration
       "echasnovski/mini.pick",
     },
@@ -213,9 +238,15 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
-        "vim", "lua", "vimdoc",
-        "html", "css", "go", "yaml",
-        "bash", "python"
+        "vim",
+        "lua",
+        "vimdoc",
+        "html",
+        "css",
+        "go",
+        "yaml",
+        "bash",
+        "python",
       },
     },
   },
