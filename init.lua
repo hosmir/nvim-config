@@ -26,8 +26,20 @@ require("lazy").setup({
 }, lazy_config)
 
 -- load theme
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
+local defaults_cache = vim.g.base46_cache .. "defaults"
+local statusline_cache = vim.g.base46_cache .. "statusline"
+
+-- Check if cache exists, if not compile theme first
+if vim.fn.filereadable(defaults_cache) == 0 then
+  local ok, base46 = pcall(require, "base46")
+  if ok then
+    base46.compile()
+  end
+end
+
+-- Load theme cache
+pcall(dofile, defaults_cache)
+pcall(dofile, statusline_cache)
 
 require "options"
 require "nvchad.autocmds"

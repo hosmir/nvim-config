@@ -1,5 +1,166 @@
 local helper = require "utils.functions"
 
+-- ═══════════════════════════════════════════════════════════════════════════
+-- CURSOR IDE THEME - EXACT colors from Cursor.app theme file
+-- Extracted from /Applications/Cursor.app/.../cursor-dark-color-theme.json
+-- ═══════════════════════════════════════════════════════════════════════════
+local function apply_cursor_theme()
+  -- Official Cursor Dark Anysphere v0.0.3 colors
+  local c = {
+    bg = "#181818",
+    fg = "#E4E4E4",
+    comment = "#707070",        -- Dimmed gray (NOT green!)
+    keyword = "#82D2CE",        -- CYAN - package, import, const, func, if, return
+    string = "#e394dc",         -- PINK - strings!
+    func_decl = "#efb080",      -- Orange - function declarations
+    func_call = "#ebc88d",      -- Yellow - function calls
+    type = "#efb080",           -- Orange - types
+    type_class = "#87c3ff",     -- Blue - classes
+    variable = "#d6d6dd",       -- Light gray - variables
+    constant = "#AAA0FA",       -- Purple - constants
+    property = "#AAA0FA",       -- Purple - properties
+    number = "#ebc88d",         -- Yellow - numbers
+    boolean = "#82d2ce",        -- Cyan - booleans
+    decorator = "#a8cc7c",      -- Green - decorators
+    operator = "#d6d6dd",       -- Light gray - operators
+    namespace = "#CCCCCC",      -- Light - namespaces
+    self_param = "#CC7C8A",     -- Pink - self/this
+  }
+
+  -- KEYWORDS: package, import, const, func, if, return, defer, var = CYAN (#82D2CE)
+  vim.api.nvim_set_hl(0, "Keyword", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "@keyword", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "@keyword.function", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "@keyword.return", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "@keyword.conditional", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "@keyword.repeat", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "@keyword.import", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "@keyword.operator", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "@keyword.export", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "Statement", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "Conditional", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "Repeat", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "Exception", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "Include", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "PreProc", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "StorageClass", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "Define", { fg = c.keyword })
+  -- Go-specific keywords
+  vim.api.nvim_set_hl(0, "@keyword.import.go", { fg = c.keyword })
+
+  -- STRINGS: PINK (#e394dc)
+  vim.api.nvim_set_hl(0, "String", { fg = c.string })
+  vim.api.nvim_set_hl(0, "@string", { fg = c.string })
+  vim.api.nvim_set_hl(0, "@string.escape", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "@string.special", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "Character", { fg = c.variable })
+
+  -- VARIABLES = Light gray (#d6d6dd)
+  vim.api.nvim_set_hl(0, "Identifier", { fg = c.variable })
+  vim.api.nvim_set_hl(0, "@variable", { fg = c.variable })
+  vim.api.nvim_set_hl(0, "@variable.parameter", { fg = c.variable })
+  vim.api.nvim_set_hl(0, "@variable.member", { fg = c.variable })
+  vim.api.nvim_set_hl(0, "@variable.builtin", { fg = c.variable })
+  vim.api.nvim_set_hl(0, "@lsp.type.variable", { fg = c.variable })
+  vim.api.nvim_set_hl(0, "@lsp.type.variable.go", { fg = c.variable })
+
+  -- PARAMETERS = Light gray
+  vim.api.nvim_set_hl(0, "@parameter", { fg = c.variable })
+  vim.api.nvim_set_hl(0, "@lsp.type.parameter", { fg = c.variable })
+
+  -- FIELDS/PROPERTIES = Purple (#AAA0FA)
+  vim.api.nvim_set_hl(0, "@field", { fg = c.variable })
+  vim.api.nvim_set_hl(0, "@property", { fg = c.property })
+  vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = c.property })
+
+  -- FUNCTIONS = Orange for declarations (#efb080), Yellow for calls (#ebc88d)
+  vim.api.nvim_set_hl(0, "Function", { fg = c.func_decl })
+  vim.api.nvim_set_hl(0, "@function", { fg = c.func_decl })
+  vim.api.nvim_set_hl(0, "@function.call", { fg = c.func_call })
+  vim.api.nvim_set_hl(0, "@function.method", { fg = c.func_call })
+  vim.api.nvim_set_hl(0, "@function.method.call", { fg = c.func_call })
+  vim.api.nvim_set_hl(0, "@function.builtin", { fg = c.func_call })
+  vim.api.nvim_set_hl(0, "@method", { fg = c.func_call })
+  vim.api.nvim_set_hl(0, "@method.call", { fg = c.func_call })
+  vim.api.nvim_set_hl(0, "@lsp.type.function", { fg = c.func_decl })
+  vim.api.nvim_set_hl(0, "@lsp.type.method", { fg = c.func_call })
+
+  -- TYPES = Orange (#efb080)
+  vim.api.nvim_set_hl(0, "Type", { fg = c.type })
+  vim.api.nvim_set_hl(0, "@type", { fg = c.type })
+  vim.api.nvim_set_hl(0, "@type.builtin", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "@type.definition", { fg = c.type })
+  vim.api.nvim_set_hl(0, "Typedef", { fg = c.type })
+  vim.api.nvim_set_hl(0, "Structure", { fg = c.type })
+  vim.api.nvim_set_hl(0, "@constructor", { fg = c.type })
+  vim.api.nvim_set_hl(0, "@lsp.type.type", { fg = c.type })
+  vim.api.nvim_set_hl(0, "@lsp.type.struct", { fg = c.type })
+  vim.api.nvim_set_hl(0, "@lsp.type.interface", { fg = c.type })
+  vim.api.nvim_set_hl(0, "@lsp.type.class", { fg = c.type_class })
+
+  -- COMMENTS = Dimmed gray (#E4E4E45E) - NOT green!
+  vim.api.nvim_set_hl(0, "Comment", { fg = c.comment, italic = true })
+  vim.api.nvim_set_hl(0, "@comment", { fg = c.comment, italic = true })
+  vim.api.nvim_set_hl(0, "@lsp.type.comment", { fg = c.comment, italic = true })
+
+  -- NUMBERS = Yellow (#ebc88d)
+  vim.api.nvim_set_hl(0, "Number", { fg = c.number })
+  vim.api.nvim_set_hl(0, "@number", { fg = c.number })
+  vim.api.nvim_set_hl(0, "Float", { fg = c.number })
+  vim.api.nvim_set_hl(0, "@float", { fg = c.number })
+  vim.api.nvim_set_hl(0, "@lsp.type.number", { fg = c.number })
+
+  -- CONSTANTS = Purple (#AAA0FA), Booleans = Cyan (#82d2ce)
+  vim.api.nvim_set_hl(0, "Constant", { fg = c.constant })
+  vim.api.nvim_set_hl(0, "@constant", { fg = c.constant })
+  vim.api.nvim_set_hl(0, "@constant.builtin", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "@boolean", { fg = c.boolean })
+  vim.api.nvim_set_hl(0, "Boolean", { fg = c.boolean })
+
+  -- OPERATORS & PUNCTUATION = Light gray (#d6d6dd)
+  vim.api.nvim_set_hl(0, "Operator", { fg = c.operator })
+  vim.api.nvim_set_hl(0, "@operator", { fg = c.operator })
+  vim.api.nvim_set_hl(0, "@punctuation", { fg = c.operator })
+  vim.api.nvim_set_hl(0, "@punctuation.bracket", { fg = c.operator })
+  vim.api.nvim_set_hl(0, "@punctuation.delimiter", { fg = c.operator })
+  vim.api.nvim_set_hl(0, "@punctuation.special", { fg = c.keyword })
+  vim.api.nvim_set_hl(0, "Delimiter", { fg = c.operator })
+
+  -- NAMESPACE/MODULE = Light (#CCCCCC)
+  vim.api.nvim_set_hl(0, "@namespace", { fg = c.namespace })
+  vim.api.nvim_set_hl(0, "@module", { fg = c.variable })
+  vim.api.nvim_set_hl(0, "@lsp.type.namespace", { fg = c.namespace })
+
+  -- DECORATORS/MACROS = Green (#a8cc7c)
+  vim.api.nvim_set_hl(0, "Macro", { fg = c.decorator })
+  vim.api.nvim_set_hl(0, "@macro", { fg = c.decorator })
+
+  -- Special tokens
+  vim.api.nvim_set_hl(0, "Special", { fg = c.func_call })
+  vim.api.nvim_set_hl(0, "SpecialChar", { fg = c.func_call })
+  vim.api.nvim_set_hl(0, "Label", { fg = c.type })
+end
+
+-- Apply on colorscheme change
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = apply_cursor_theme,
+})
+
+-- Apply immediately on startup
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    vim.defer_fn(apply_cursor_theme, 100)
+  end,
+})
+
+-- Also apply after LSP attaches (for semantic tokens)
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function()
+    vim.defer_fn(apply_cursor_theme, 200)
+  end,
+})
+
 vim.api.nvim_create_autocmd("User", {
   pattern = "VeryLazy",
   callback = function()
