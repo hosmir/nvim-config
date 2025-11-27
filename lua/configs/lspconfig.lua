@@ -1,32 +1,26 @@
 -- load defaults i.e lua_lsp
 require("nvchad.configs.lspconfig").defaults()
 
--- Helper function to find root directory using patterns (replacement for lspconfig.util.root_pattern)
-local function root_pattern(...)
-  local patterns = { ... }
-  return function(startpath)
-    local found = vim.fs.find(patterns, { path = startpath, upward = true })[1]
-    return found and vim.fs.dirname(found) or nil
-  end
-end
+-- Suppress deprecation warning for require('lspconfig')
+-- The old API still works, we'll migrate when nvchad fully supports the new API
+local lspconfig = require "lspconfig"
 
 local servers = { "html", "cssls" }
 local nvlsp = require "nvchad.configs.lspconfig"
 
-vim.lsp.config("ts_ls", {
+lspconfig.ts_ls.setup {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
-})
-vim.lsp.enable "ts_ls"
+}
 
-vim.lsp.config("gopls", {
+lspconfig.gopls.setup {
   on_attach = nvlsp.on_attach,
   capabilities = nvlsp.capabilities,
   on_init = nvlsp.on_init,
   cmd = { "gopls" },
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
-  root_dir = root_pattern("go.work", "go.mod", ".git"),
+  root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
   settings = {
     gopls = {
       completeUnimported = true,
@@ -36,10 +30,9 @@ vim.lsp.config("gopls", {
       },
     },
   },
-})
-vim.lsp.enable "gopls"
+}
 
-vim.lsp.config("basedpyright", {
+lspconfig.basedpyright.setup {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
@@ -62,10 +55,9 @@ vim.lsp.config("basedpyright", {
       },
     },
   },
-})
-vim.lsp.enable "basedpyright"
+}
 
-vim.lsp.config("pylsp", {
+lspconfig.pylsp.setup {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
@@ -79,11 +71,10 @@ vim.lsp.config("pylsp", {
       },
     },
   },
-})
-vim.lsp.enable "pylsp"
+}
 
 ---- yaml
-vim.lsp.config("yamlls", {
+lspconfig.yamlls.setup {
   on_attach = nvlsp.on_attach,
   capabilities = nvlsp.capabilities,
   settings = {
@@ -93,29 +84,25 @@ vim.lsp.config("yamlls", {
       },
     },
   },
-})
-vim.lsp.enable "yamlls"
+}
 
 ---- Markdown
-vim.lsp.config("marksman", {
+lspconfig.marksman.setup {
   on_attach = nvlsp.on_attach,
   capabilities = nvlsp.capabilities,
   filetypes = { "markdown" },
-})
-vim.lsp.enable "marksman"
+}
 
-vim.lsp.config("bashls", {
+lspconfig.bashls.setup {
   on_attach = nvlsp.on_attach,
   capabilities = nvlsp.capabilities,
   filetypes = { "bash", "sh", "zsh" },
-})
-vim.lsp.enable "bashls"
+}
 
 for _, lsp in ipairs(servers) do
-  vim.lsp.config(lsp, {
+  lspconfig[lsp].setup {
     on_attach = nvlsp.on_attach,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
-  })
-  vim.lsp.enable(lsp)
+  }
 end
