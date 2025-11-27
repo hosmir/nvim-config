@@ -122,7 +122,7 @@ M.clue = {
     { mode = "i", keys = "<C-x>" }, -- INSERT ONLY
 
     -- `g` key
-    { mode = "n", keys = "g" },
+    -- { mode = "n", keys = "g" },
     { mode = "x", keys = "g" },
 
     -- Marks
@@ -195,6 +195,11 @@ M.files = {
   content = {
     filter = filter_fn,
   },
+}
+
+M.operators = {
+  -- Disable 'gr' mapping to allow LSP references to work
+  replace = { prefix = "" }, -- Disable 'gr' for replace, allowing LSP 'gr' to work
 }
 
 M.sessions = {

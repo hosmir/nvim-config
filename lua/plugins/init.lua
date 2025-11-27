@@ -150,7 +150,12 @@ return {
       -- require("mini.files").setup(require("configs.mini").files)
       require("mini.move").setup(require("configs.mini").move)
       require("mini.notify").setup()
-      require("mini.operators").setup()
+      require("mini.operators").setup(require("configs.mini").operators)
+      -- Unmap 'gr' from mini.operators to allow LSP references to work
+      -- Use pcall in case the mapping doesn't exist
+      pcall(vim.api.nvim_del_keymap, "n", "gr")
+      pcall(vim.api.nvim_del_keymap, "x", "gr")
+      pcall(vim.api.nvim_del_keymap, "o", "gr")
       require("mini.sessions").setup(require("configs.mini").sessions)
       require("mini.splitjoin").setup {
         mappings = {
@@ -289,5 +294,12 @@ return {
       { "<leader>gp", "<cmd>Gitsigns preview_hunk<cr>", desc = "Preview git hunk" },
       { "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<cr>", desc = "Toggle current line blame" },
     },
+  },
+  {
+    "Wansmer/symbol-usage.nvim",
+    event = "LspAttach",
+    config = function()
+      require("symbol-usage").setup()
+    end,
   },
 }

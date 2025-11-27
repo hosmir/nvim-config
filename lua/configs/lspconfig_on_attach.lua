@@ -52,6 +52,10 @@ M.on_attach = function(_, bufnr)
     map("n", keybind, command, silent_bufnr(description))
   end
 
+  -- Explicitly map 'gr' to LSP references (overrides mini.operators)
+  -- Use buffer-local mapping with 'nowait' to ensure it takes precedence
+  map("n", "gr", keys.lsp.references[1], vim.tbl_extend("force", silent_bufnr(keys.lsp.references[2]), { nowait = true }))
+
   local md_keys = require "utils.lsp_bindings_markdown"
 
   local nd_k = md_keys.notes_dashboards
