@@ -309,7 +309,16 @@ return {
     "Wansmer/symbol-usage.nvim",
     event = "LspAttach",
     config = function()
-      require("symbol-usage").setup()
+      local SymbolKind = vim.lsp.protocol.SymbolKind
+      require("symbol-usage").setup {
+        symbol_request_pos = "start",
+        kinds = { SymbolKind.Function, SymbolKind.Method, SymbolKind.Struct },
+        log = {
+          enabled = true,
+          level = "INFO",
+          log_file = { enabled = false },
+        },
+      }
     end,
   },
 }
