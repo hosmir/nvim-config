@@ -18,6 +18,7 @@ M.ensure_installed = {
   "yamlls", -- yamlls
   "marksman", -- marksman
   "bashls", -- bashls
+  "texlab", -- texlab (LaTeX)
 
   -- From defaults (lua_lsp)
   "lua_ls", -- lua_lsp (note: lspconfig uses lua_ls, not lua_lsp)

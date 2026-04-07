@@ -156,15 +156,25 @@ return {
       pcall(vim.api.nvim_del_keymap, "n", "gr")
       pcall(vim.api.nvim_del_keymap, "x", "gr")
       pcall(vim.api.nvim_del_keymap, "o", "gr")
-      require("mini.sessions").setup(require("configs.mini").sessions)
-      require("mini.splitjoin").setup {
-        mappings = {
-          toggle = "\\k",
-          split = "sk",
-          join = "sj",
-        },
-      }
-      require("mini.surround").setup()
+      -- require("mini.sessions").setup(require("configs.mini").sessions)
+      -- require("mini.splitjoin").setup {
+      --   mappings = {
+      --     toggle = "\\k",
+      --     split = "sk",
+      --     join = "sj",
+      --   },
+      -- }
+      -- require("mini.surround").setup {
+      --   mappings = {
+      --     add            = "gza",
+      --     delete         = "gzd",
+      --     find           = "gzf",
+      --     find_left      = "gzF",
+      --     highlight      = "gzh",
+      --     replace        = "gzr",
+      --     update_n_lines = "gzn",
+      --   },
+      -- }
       -- require("mini.bufremove").setup()
       -- require("mini.git").setup()
       -- require("mini.tabline").setup()
@@ -289,7 +299,16 @@ return {
     "Wansmer/symbol-usage.nvim",
     event = "LspAttach",
     config = function()
-      require("symbol-usage").setup()
+      local SymbolKind = vim.lsp.protocol.SymbolKind
+      require("symbol-usage").setup {
+        symbol_request_pos = "start",
+        kinds = { SymbolKind.Function, SymbolKind.Method, SymbolKind.Struct },
+        log = {
+          enabled = true,
+          level = "INFO",
+          log_file = { enabled = false },
+        },
+      }
     end,
   },
 }
