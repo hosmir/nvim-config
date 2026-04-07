@@ -99,6 +99,14 @@ lspconfig.bashls.setup {
   filetypes = { "bash", "sh", "zsh" },
 }
 
+---- LaTeX
+lspconfig.texlab.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  filetypes = { "tex", "bib" },
+}
+
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = nvlsp.on_attach,
