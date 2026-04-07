@@ -33,16 +33,55 @@ return {
     end,
   },
 
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    config = function()
+      require("noice").setup(require("configs.noice").config)
+    end,
+  },
+
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = "cd app && npx --yes yarn install",
+  },
+
+  {
+    "Wansmer/symbol-usage.nvim",
+    event = "BufReadPre",
+    config = function()
+      local SymbolKind = vim.lsp.protocol.SymbolKind
+      require("symbol-usage").setup {
+        symbol_request_pos = "start",
+        kinds = { SymbolKind.Function, SymbolKind.Method, SymbolKind.Struct },
+      }
+    end,
+  },
+
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
 
-  -- {
-  -- 	"nvim-treesitter/nvim-treesitter",
-  -- 	opts = {
-  -- 		ensure_installed = {
-  -- 			"vim", "lua", "vimdoc",
-  --      "html", "css"
-  -- 		},
-  -- 	},
-  -- },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "go",
+        "gomod",
+        "gowork",
+        "gosum",
+        "python",
+        "typescript",
+        "javascript",
+        "bash",
+        "yaml",
+        "html",
+        "css",
+        "markdown",
+        "markdown_inline",
+      },
+    },
+  },
 }
