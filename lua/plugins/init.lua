@@ -61,6 +61,21 @@ return {
     end,
   },
 
+  {
+    "ray-x/go.nvim",
+    dependencies = {
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("go").setup { lsp_codelens = false }
+    end,
+    event = { "CmdlineEnter" },
+    ft = { "go", "gomod", "gosum", "gotmpl", "gohtmltmpl", "gotexttmpl" },
+    build = ':lua require("go.install").update_all_sync()',
+  },
+
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
 
