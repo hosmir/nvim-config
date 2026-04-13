@@ -80,6 +80,47 @@ return {
   -- { import = "nvchad.blink.lazyspec" },
 
   {
+    "kevinhwang91/nvim-ufo",
+    dependencies = {
+      { "kevinhwang91/promise-async" },
+      {
+        "luukvbaal/statuscol.nvim",
+        config = function()
+          local builtin = require "statuscol.builtin"
+          require("statuscol").setup {
+            setopt = true,
+            relculright = true,
+            segments = {
+              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+              { text = { "%s" }, click = "v:lua.ScSa" },
+              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+            },
+          }
+        end,
+      },
+    },
+    lazy = false,
+    config = function()
+      vim.opt.fillchars = {
+        eob = " ",
+        fold = " ",
+        foldopen = "▾",
+        foldsep = " ",
+        foldclose = "▸",
+      }
+      vim.o.foldcolumn = "2"
+      vim.o.foldlevel = 99
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+      require("ufo").setup {
+        provider_selector = function(_, _, _)
+          return { "treesitter", "indent" }
+        end,
+      }
+    end,
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
