@@ -42,19 +42,6 @@ vim.lsp.config("basedpyright", {
   },
 })
 
-vim.lsp.config("pylsp", {
-  settings = {
-    pylsp = {
-      plugins = {
-        pycodestyle = {
-          ignore = { "E501" },
-          maxLineLength = 100,
-        },
-      },
-    },
-  },
-})
-
 -- YAML
 vim.lsp.config("yamlls", {
   settings = {
@@ -87,7 +74,6 @@ vim.lsp.enable {
   "ts_ls",
   "gopls",
   "basedpyright",
-  "pylsp",
   "yamlls",
   "marksman",
   "bashls",

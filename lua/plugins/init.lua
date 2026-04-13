@@ -30,6 +30,15 @@ return {
         ensure_installed = require("configs.mason").ensure_installed,
         automatic_installation = true,
       }
+      local mr = require "mason-registry"
+      mr.refresh(function()
+        for _, tool in ipairs(require("configs.mason").formatters) do
+          local p = mr.get_package(tool)
+          if not p:is_installed() then
+            p:install()
+          end
+        end
+      end)
     end,
   },
 
@@ -51,7 +60,7 @@ return {
 
   {
     "Wansmer/symbol-usage.nvim",
-    event = "BufReadPre",
+    event = "LspAttach",
     config = function()
       local SymbolKind = vim.lsp.protocol.SymbolKind
       require("symbol-usage").setup {

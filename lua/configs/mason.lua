@@ -5,6 +5,8 @@ local M = {}
 
 -- List of all LSP servers configured in lspconfig.lua
 -- These are the lspconfig server names (mason-lspconfig handles the mapping)
+M.formatters = { "black" }
+
 M.ensure_installed = {
   -- From servers array
   "html",
@@ -14,7 +16,6 @@ M.ensure_installed = {
   "ts_ls",
   "gopls",
   "basedpyright",
-  "pylsp",
   "yamlls",
   "marksman",
   "bashls",
